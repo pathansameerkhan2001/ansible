@@ -1,0 +1,30 @@
+---
+- hosts: production
+  become: yes
+  vars:
+  tasks:
+     - name: JDK Installation
+       apt:
+         name: default-jdk
+         update_cache: yes
+
+     - name: git Installation
+       apt:
+         name: git
+         update_cache: yes
+
+     - name: maven Installation
+       apt:
+         name: maven
+         update_cache: yes
+
+     - name: Tomcat9 Installation
+       apt:
+         name: "{{ item }}"
+         update_cache: yes
+       loop:
+         - "tomcat9"
+         - "tomcat9-admin"
+
+     - name: Start Tomcat Apache
+       service: name=tomcat9 state=restarted
